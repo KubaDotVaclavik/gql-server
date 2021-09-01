@@ -1,0 +1,73 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Candidate {
+  id: ID!
+  fullName: String!
+  salary: Float
+  skills: String!
+  jobAds(skip: Int = 0, take: Int = 25): [JobAd!]!
+}
+
+type JobAd {
+  id: ID!
+  title: String!
+  salary: Float
+  text: String!
+}
+
+type JobApplication {
+  id: ID!
+  candidateId: ID!
+  jobAdId: ID!
+}
+
+type Query {
+  candidate(id: String!): Candidate!
+  candidates(skip: Int = 0, take: Int = 5, where: CandidatesWhere): [Candidate!]!
+  jobAd(id: String!): JobAd!
+  jobAds(skip: Int = 0, take: Int = 25): [JobAd!]!
+  jobApplication(id: String!): JobApplication!
+  jobApplications(skip: Int = 0, take: Int = 25): [JobApplication!]!
+}
+
+input CandidatesWhere {
+  skillsContaines: String
+  fullNameContaines: String
+  salaryMax: Int
+  salaryMin: Int
+}
+
+type Mutation {
+  createCandidate(createInput: CandidateCreateInput!): Candidate!
+  removeCandidate(id: String!): Candidate!
+  createJobAd(createInput: JobAdCreateInput!): JobAd!
+  updateJobAd(updateInput: JobAdUpdateInput!, id: String!): JobAd!
+  removeJobAd(id: String!): Boolean!
+  createJobApplication(createInput: JobApplicationCreateInput!): JobApplication!
+  removeJobApplication(id: String!): Boolean!
+}
+
+input CandidateCreateInput {
+  fullName: String!
+  salary: Float
+  skills: String!
+}
+
+input JobAdCreateInput {
+  title: String!
+  text: String!
+  salary: Float
+}
+
+input JobAdUpdateInput {
+  title: String
+  text: String
+  salary: Float
+}
+
+input JobApplicationCreateInput {
+  candidateId: ID!
+  jobAdId: ID!
+}
