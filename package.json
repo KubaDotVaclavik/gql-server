@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/KubaDotVaclavik/gql-server/issues"
   },
-  "homepage": "https://github.com/KubaDotVaclavik/gql-server#readme"
+  "homepage": "https://github.com/KubaDotVaclavik/gql-server#readme",
+  "dependencies": {
+    "@nestjs/graphql": "^9.0.2",
+    "apollo-server-express": "^3.3.0",
+    "graphql": "^15.5.2"
+  }
 }
