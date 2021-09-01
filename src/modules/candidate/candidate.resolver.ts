@@ -15,6 +15,7 @@ import { CandidatesService } from "./candidates.service";
 import { JobAd } from "../jobAd/models/jobAd.model";
 import { JobAdService } from "../jobAd/jobAd.service";
 import { PaginationArgs } from "../common/dto/pagination.args";
+import { CandidateUpdateInput } from "./dto/candidateUpdate.input";
 
 @Resolver((of) => Candidate)
 export class CandidatesResolver {
@@ -42,6 +43,15 @@ export class CandidatesResolver {
     @Args("createInput") createInput: CandidateCreateInput
   ): Promise<Candidate> {
     const candidate = await this.candidatesService.create(createInput);
+    return candidate;
+  }
+
+  @Mutation((returns) => Candidate)
+  async updateCandidate(
+    @Args("id") id: string,
+    @Args("updateInput") updateInput: CandidateUpdateInput
+  ): Promise<Candidate> {
+    const candidate = await this.candidatesService.update(id, updateInput);
     return candidate;
   }
 

@@ -41,6 +41,7 @@ input CandidatesWhere {
 
 type Mutation {
   createCandidate(createInput: CandidateCreateInput!): Candidate!
+  updateCandidate(updateInput: CandidateUpdateInput!, id: String!): Candidate!
   removeCandidate(id: String!): Candidate!
   createJobAd(createInput: JobAdCreateInput!): JobAd!
   updateJobAd(updateInput: JobAdUpdateInput!, id: String!): JobAd!
@@ -53,6 +54,12 @@ input CandidateCreateInput {
   fullName: String!
   salary: Float
   skills: String!
+}
+
+input CandidateUpdateInput {
+  fullName: String
+  salary: Float
+  skills: String
 }
 
 input JobAdCreateInput {

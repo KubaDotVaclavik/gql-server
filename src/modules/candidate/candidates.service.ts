@@ -3,6 +3,7 @@ import { CandidateCreateInput } from "./dto/candidateCreate.input";
 import { CandidatesArgs } from "./dto/candidates.args";
 import { PrismaService } from "../../core/prisma.service";
 import { Prisma, Candidate } from "@prisma/client";
+import { CandidateUpdateInput } from "./dto/candidateUpdate.input";
 
 @Injectable()
 export class CandidatesService {
@@ -10,6 +11,10 @@ export class CandidatesService {
 
   async create(data: CandidateCreateInput): Promise<Candidate> {
     return this.prisma.candidate.create({ data });
+  }
+
+  async update(id: string, data: CandidateUpdateInput): Promise<Candidate> {
+    return this.prisma.candidate.update({ where: { id }, data });
   }
 
   async findOneById(id: string): Promise<Candidate> {
