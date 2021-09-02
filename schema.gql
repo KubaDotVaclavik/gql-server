@@ -4,10 +4,11 @@
 
 type Candidate {
   id: ID!
-  fullName: String!
+  fullName(uppercase: Boolean): String!
   salary: Float
   skills: String!
   jobAds(skip: Int = 0, take: Int = 25): [JobAd!]!
+  random: String!
 }
 
 type JobAd {
@@ -15,6 +16,7 @@ type JobAd {
   title: String!
   salary: Float
   text: String!
+  random: String!
 }
 
 type JobApplication {

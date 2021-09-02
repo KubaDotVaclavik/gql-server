@@ -16,6 +16,7 @@ import { JobAd } from "../jobAd/models/jobAd.model";
 import { JobAdService } from "../jobAd/jobAd.service";
 import { PaginationArgs } from "../common/dto/pagination.args";
 import { CandidateUpdateInput } from "./dto/candidateUpdate.input";
+import { wait } from "src/core/utils";
 
 @Resolver((of) => Candidate)
 export class CandidatesResolver {
@@ -26,6 +27,7 @@ export class CandidatesResolver {
 
   @Query((returns) => Candidate)
   async candidate(@Args("id") id: string): Promise<Candidate> {
+    await wait(500);
     const candidate = await this.candidatesService.findOneById(id);
     if (!candidate) {
       throw new NotFoundException(id);
@@ -34,7 +36,10 @@ export class CandidatesResolver {
   }
 
   @Query((returns) => [Candidate])
-  candidates(@Args() candidatesArgs: CandidatesArgs): Promise<Candidate[]> {
+  async candidates(
+    @Args() candidatesArgs: CandidatesArgs
+  ): Promise<Candidate[]> {
+    await wait(500);
     return this.candidatesService.findAll(candidatesArgs);
   }
 
@@ -51,6 +56,7 @@ export class CandidatesResolver {
     @Args("id") id: string,
     @Args("updateInput") updateInput: CandidateUpdateInput
   ): Promise<Candidate> {
+    await wait(500);
     const candidate = await this.candidatesService.update(id, updateInput);
     return candidate;
   }
@@ -66,5 +72,18 @@ export class CandidatesResolver {
     @Args() args: PaginationArgs
   ) {
     return this.jobAdService.findAllByCandidateId(candidate.id, args);
+  }
+
+  @ResolveField("fullName", (type) => String)
+  async getFullName(
+    @Parent() candidate: Candidate,
+    @Args("uppercase", { nullable: true }) uppercase?: boolean
+  ) {
+    return uppercase ? candidate.fullName.toUpperCase() : candidate.fullName;
+  }
+
+  @ResolveField("random", (type) => String)
+  async calcRandom() {
+    return (Math.random() + 1).toString(36).substring(7);
   }
 }

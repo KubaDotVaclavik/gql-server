@@ -7,7 +7,7 @@ export class Candidate {
 
   @Field()
   fullName: string;
-
+  
   @Field({nullable: true})
   salary?: number;
 
